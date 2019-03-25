@@ -1,0 +1,70 @@
+PHRASAL SMT MODEL USAGE 
+
+
+1. PRE-PROCESSING - Enter the sentences you want to include for Training
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/src $ python preprocess.py ../Dataset/Parallel_corpus/europarl-v7.de-en.en ../Dataset/Parallel_corpus/europarl-v7.de-en.de 200000
+
+[NOTE] Generate four files- trainingSource.txt trainingTarget.txt testingSource.txt testingTarget.txt
+
+2. Install Giza++
+
+3. Word Alignment
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/giza-pp-master/GIZA++-v2 $ ./plain2snt.out ../../Dataset/trainingSource.txt ../../Dataset/trainingTarget.txt
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/giza-pp-master/mkcls-v2 $ ./mkcls -p../../Dataset/trainingSource.txt -V../../Dataset/trainingSource.vcb.classes
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/giza-pp-master/mkcls-v2 $ ./mkcls -p../../Dataset/trainingTarget.txt -V../../Dataset/trainingTarget.vcb.classes
+
+- Word Alignment for Source
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/giza-pp-master/GIZA++-v2 $ ./GIZA++ -s ../../Dataset/trainingSource.vcb -t ../../Dataset/trainingTarget.vcb -c ../../Dataset/trainingSource_trainingTarget.snt -o sourceAlignment
+
+[NOTE] copy sourceAlignment* files from Giza++ folder to dataset wordallignment
+
+- Word Alignment for Target
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/giza-pp-master/GIZA++-v2 $ ./GIZA++ -s ../../Dataset/trainingTarget.vcb -t ../../Dataset/trainingSource.vcb -c ../../Dataset/trainingTarget_trainingSource.snt -o targetAlignment 
+
+[NOTE] 
+copy target Alignment* files from Giza++ folder to dataset wordallignment
+*.A3.final is final  word alignment, now copy data to sourceAlignment.txt and targetAlignment.txt in the two file in Dataset folder.
+
+
+
+
+4. Phrase Extraction
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/src $ python phraseExtraction.py ../Dataset/sourceAlignment.txt ../Dataset/targetAlignment.txt 
+
+5. Translation Probabilities and Language Modelling
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/src $ python findTranslationProbability.py phrases.txt 
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/src $ python languageModelInput.py ../Dataset/trainingSource.txt ../Dataset/trainingS.txt
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/src $ python languageModelInput.py ../Dataset/trainingTarget.txt ../Dataset/trainingT.txt
+
+6. Install  IRSTLM
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/irstlm-master/bin $ ./ngt -i="gunzip -c ../../Dataset/trainingS.gz" -n=3 -o=../../Dataset/trainingS.www -b=yes
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/irstlm-master/bin $ ./tlm -tr=../../Dataset/trainingS.www -n=3 -lm=wb -o=../../Dataset/trainingS.lm
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/irstlm-master/bin $ ./ngt -i="gunzip -c ../../Dataset/trainingT.gz" -n=3 -o=../../Dataset/trainingT.www -b=yes
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/irstlm-master/bin $ ./tlm -tr=../../Dataset/trainingT.www -n=3 -lm=wb -o=../../Dataset/trainingT.lm
+
+7. Calculate Final Translation Probability
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/src $ python finalScore.py translationProbabilityTargetGivenSource.txt ../Dataset/trainingS.lm  finalTranslationProbabilityTargetGivenSource.txt
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/src $ python finalScore.py translationProbabilitySourceGivenTarget.txt ../Dataset/trainingT.lm finalTranslationProbabilitySourceGivenTarget.txt
+
+
+
+
+8. Testing
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/src $ python stackDecoding.py finalTranslationProbabilityTargetGivenSource.txt ../Dataset/testingTarget.txt
+
+~/Research/SMT_HIN-URD/Phrase-Based-Model-master/src $ python stackDecoding.py finalTranslationProbabilitySourceGivenTarget.txt ../Dataset/testingSource.txt
