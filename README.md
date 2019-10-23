@@ -15,6 +15,8 @@ We had 4 models in place:
 
 Presentation for this can be found [here](https://docs.google.com/presentation/d/1gFLNJ5rKn0JlKjI47HuYFxF-8RcFhMoiFeevBbLshKI/edit?usp=sharing) where the details of the implementation has been explained in detail, along with the results.
 
-#### Authors:
+Built and tested using Python3 on Linux.
+
+### Authors:
 
 Saurabh Chand Ramola, Sumukh S
