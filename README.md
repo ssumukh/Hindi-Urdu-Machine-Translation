@@ -13,7 +13,7 @@ We had 4 models in place:
 * Effective Approaches to Attention-based Neural Machine Translation ([paper link](https://www.aclweb.org/anthology/D15-1166/))
 * Modeling Coverage for Neural Machine Translation ([paper link](https://www.aclweb.org/anthology/P16-1008/))
 
-Presentation for this can be found [here](https://docs.google.com/presentation/d/1gFLNJ5rKn0JlKjI47HuYFxF-8RcFhMoiFeevBbLshKI/edit?usp=sharing) where the details of the implementation has been explained in detail, along with the results. [Report](https://docs.google.com/document/d/1QFDVudKToEGptqgMwA42qtisTqjGVqahmVqYoVhf8HA/edit?usp=sharing)
+Presentation for this can be found [here](https://docs.google.com/presentation/d/1gFLNJ5rKn0JlKjI47HuYFxF-8RcFhMoiFeevBbLshKI/edit?usp=sharing) where the details of the implementation has been explained in detail, along with the results.
 
 Built and tested using Python3 on Linux.
 
