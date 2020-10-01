@@ -1,6 +1,6 @@
 # Hindi-Urdu-Machine-Translation
 
-### Approach:
+### Our Approach:
 We tried both statistical machine translation models, and neural machine translation models for this task. The dataset can not be made public as it was part of a contained study, but these models can be used for any 2 languages.
 
 ##### Statistical Machine Translation (SMT) model:
@@ -15,8 +15,10 @@ We had 4 models in place:
 
 Presentation for this can be found [here](https://docs.google.com/presentation/d/1gFLNJ5rKn0JlKjI47HuYFxF-8RcFhMoiFeevBbLshKI/edit?usp=sharing) where the details of the implementation has been explained in detail, along with the results.
 
-Built and tested using Python3 on Linux.
+Built and tested using Python3 on the Linux operating system.
 
 ### Authors:
 
 Saurabh Chand Ramola, Sumukh S
+
+Thanking you !
